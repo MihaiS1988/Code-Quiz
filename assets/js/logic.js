@@ -170,9 +170,6 @@ function showFinalScore() {
   
       submitBtn.addEventListener("click", function (event) {
       event.preventDefault();
-  
-      
-       finalScore();
        setScore();
        redirect();
        
