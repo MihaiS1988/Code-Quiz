@@ -1,31 +1,28 @@
-let clearBtn=document.getElementById("clear");
-let hightScoresList = document.getElementById("highscores");
+let highScoresList = document.querySelector('#highscores');
+let clearBtn = document.querySelector('#clear');
+
+let savedScoreArray = JSON.parse(localStorage.getItem("score"))
+
+console.log(savedScoreArray)
 
 
-//This function is showing all the scores 
-function showAllScores (){
+if (savedScoreArray.length > 1) {  // If multiple scores stored, this if statement will sort them.
+savedScoreArray.sort((a, b) => {
+    return b.score - a.score
+})
+    savedScoreArray.forEach( (el) => {
+        let newLi = document.createElement('li')
+        newLi.textContent = `${el.initials} with ${el.score} points`
+        highScoresList.appendChild(newLi)
+    })
 
-    
-   
-    for( let i = 0; i < JSON.parse(localStorage.getItem("iniArray")).length; i++ ) { 
-        let li= document.createElement("li"); 
-        console.log("testing loop ");
-        li.textContent =  JSON.parse(localStorage.getItem("iniArray"))[i] +" "  + JSON.parse(localStorage.getItem("scArray"))[i];
-        hightScoresList.appendChild(li);
-   }
+} else {
+    let newLi = document.createElement('li')
+    newLi.textContent = `${savedScoreArray.initials} with ${savedScoreArray.score} points`
+    highScoresList.appendChild(newLi)
+}
 
-
-
-
-  
-}   
-    
-showAllScores();
-
-
-//This function is clearing the localstorage API
-function clear (){
-    hightScoresList.textContent = localStorage.clear(); 
-}    
-
- clearBtn.addEventListener("click" , clear);
+clearBtn.addEventListener("click", function (){
+    localStorage.clear()
+    highScoresList.remove()
+})
